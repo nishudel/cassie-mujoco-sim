@@ -1,0 +1,1 @@
+time,left_hip_angle,left_knee_spring_angle,left_toe_angle,right_hip_angle,right_knee_spring_angle,right_toe_angle,left_hip_qvel,left_knee_spring_qvel,left_toe_qvel,right_hip_qvel,right_knee_spring_qvel,right_toe_qvel
