@@ -102,10 +102,9 @@ double * hdtoqd(double * hd)
 		q[7]= y_knee_joint_right;
 		q[9]= y_toe_joint_right;
 
-
+		
 			/*//creating h~d from ha
 			static double hd[9];
-		 
 			hd[0]=ha[0];	
 			hd[1]=ha[1];
 			hd[2]=ha[2];
@@ -148,8 +147,8 @@ double * hdtoqd(double * hd)
 			q[8]=acos( (pow(q_ll_sw,2)-0.5301)/0.5292)-0.035;
 			q[7]=q_lp_sw+q_pitch-0.1+ acos( (0.5*(cos(q[7]+0.035)+0.5292))/(sqrt(0.5292*cos(q[7]+0.035)+0.5301)));
 			q[9]=q_fp_sw+q_pitch-1.1;
-
 			*/
+			
 			//This configuration needs to be given to mujoco simulation immediately
 		return q;
 			

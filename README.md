@@ -24,3 +24,19 @@ To build and run the examples:
 The examples include cassiesim, which simulates a physical Cassie robot controlled over UDP, and cassiectrl, a null controller operating over UDP. The file cassietest.c is a minimal example of running the simulation, and cassietest.py demonstrates controlling the simulated robot in Python.
 
 Documentation for the simulation functions is included in include/cassiemujoco.h. The file header/udp.h declares convenience functions for creating a UDP socket and obtaining the most recent packet. The remaining header files include functions for packing and unpacking structures used to communicate with Cassie into UDP packets and for simulating Cassie's internal safety mechanisms and state estimation processes.
+
+
+# cassie-mujoco-sim-Venki-edit
+
+I have modified the cassietest.c program to make it do my tasks.
+
+Any function that we write needs to be placed inside src folder in a .c file
+
+The corresponding header file will be placed in the header folder.
+
+Any changes to the cassietest.c progeam needs to be done in the example folder( another fplder is created called test- do not touch this)
+      
+To run the program just run the run_cassietest.sh script or follow the steps in it.
+
+
+

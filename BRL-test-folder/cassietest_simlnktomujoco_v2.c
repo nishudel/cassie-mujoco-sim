@@ -69,7 +69,7 @@ int main(void)
 					}
 			}	
 
-		cassie_sim_hold(c);
+		//cassie_sim_hold(c);
 		double *q;
 		double *qdot;
 		double params[10][6];
