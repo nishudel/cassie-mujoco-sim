@@ -6,9 +6,104 @@
 
 
 
-double * htoq(double * ha)
-		{
-			//creating h~d from ha
+
+	
+int factorial(int a)
+	{
+    		int f = 1, i;
+   		if (a == 0)
+		    {
+		        return(f);
+		    }
+		else
+		    {
+        		for (i = 1; i <= a; i=i+1)
+				{
+        			    f = f * i;
+				}
+    		     }
+  		return(f);
+	}
+
+
+double* qd( double T, double params[10][6])
+	{
+
+		static double q[10]={0};
+
+		//This is tau in the paper: T= t-t_/t_step 
+		//Note : t_step=0.400 sec
+		double t=T; 		
+
+		//The following is the evaluation of h_alpha at any given tau:
+		for (int i=0;i<10;i=i+1)
+			{
+				for(int j=0;j<6;j=j+1)
+					{
+						double ncr=factorial(5)/(factorial(j)*factorial(5-j));
+						q[i]=q[i]+ params[i][j]*ncr*pow(t,j)*pow((1-t),(5-j)); 			
+
+					}
+			}					
+		return q;				
+			
+	} 
+
+double* qddot(double T, double params[10][6])
+	{
+		static double qdot[10]={0};
+		//This is tau in the paper: T= t-t_/t_step
+		//Note : t_step=0.400 sec
+		double t=T;
+		double t_step=0.4;
+		//The following is the evaluation of qddot at any given tau:
+		for (int i=0;i<10;i=i+1)
+			{
+				for(int k=0;k<6;k=k+1)
+					{
+						double ncr=factorial(5)/(factorial(k)*factorial(5-k));
+						qdot[i]=qdot[i]+ (params[i][k]*ncr*(k*pow(t,k-1)*pow((1-t),(5-k)) - (5-k)*pow(t,k)*pow((1-t),(5-k-1))))/t_step;
+
+		
+
+					}
+			}					
+		return qdot;
+
+	}
+
+double * hdtoqd(double * hd)
+	{
+		static double q[10];
+
+		//roll=abduction
+		//pitch=flexion
+		//yaw=rotation
+		double y_hip_abduction_left=hd[0];
+		double y_hip_rotation_left=hd[1];
+		double y_hip_flexion_left=hd[2];
+		double y_knee_joint_left=hd[3];
+		double y_toe_joint_left=hd[4];
+		double y_hip_abduction_right=hd[5];
+		double y_hip_rotation_right=hd[6];
+		double y_hip_flexion_right=hd[7];
+		double y_knee_joint_right=hd[8];
+		double y_toe_joint_right=hd[9];
+
+
+		q[0]= y_hip_abduction_left;
+		q[1]= y_hip_rotation_left;
+		q[2]= y_hip_flexion_left;
+		q[3]= y_knee_joint_left;
+		q[4]= y_toe_joint_left;
+		q[5]= y_hip_abduction_right;
+		q[6]= y_hip_rotation_right;
+		q[8]= y_hip_flexion_right;
+		q[7]= y_knee_joint_right;
+		q[9]= y_toe_joint_right;
+
+
+			/*//creating h~d from ha
 			static double hd[9];
 		 
 			hd[0]=ha[0];	
@@ -54,14 +149,14 @@ double * htoq(double * ha)
 			q[7]=q_lp_sw+q_pitch-0.1+ acos( (0.5*(cos(q[7]+0.035)+0.5292))/(sqrt(0.5292*cos(q[7]+0.035)+0.5301)));
 			q[9]=q_fp_sw+q_pitch-1.1;
 
+			*/
 			//This configuration needs to be given to mujoco simulation immediately
-			return q;
+		return q;
+			
 
-		}
+	}
 
-
-
-double * add_smlnk_params(double* q,int flag)
+double * add_smlnk_params(double* q,double* qd,int flag)
 		{
 
 			/*NOTE: It is assumed initially the error in desired velocity of joints i.e q~dot is zero*/  
@@ -69,11 +164,13 @@ double * add_smlnk_params(double* q,int flag)
 			static double in[119];
 			/*This will hold the cnofigurations in order of right leg first and then left leg*/
 			static double q1[10];
-			
+			static double q1dot[10];
 			/*flag=1 implies right leg stance flag=0 implies left leg stance*/ 
 			if(flag==1)	
 				{	for(int k=0;k<10;k=k+1)
-						q1[k]=q[k];
+						{	q1[k]=q[k];
+							q1dot[k]=qd[k];				
+						}					
 				}
 
 			else 
@@ -88,6 +185,18 @@ double * add_smlnk_params(double* q,int flag)
 					q1[7]=q[2];
 					q1[8]=q[3];
 					q1[9]=q[4];
+
+					q1dot[0]=qd[5];
+					q1dot[1]=qd[6];
+					q1dot[2]=qd[7];
+					q1dot[3]=qd[8];
+					q1dot[4]=qd[9];
+					q1dot[5]=qd[0];
+					q1dot[6]=qd[1];
+					q1dot[7]=qd[2];
+					q1dot[8]=qd[3];
+					q1dot[9]=qd[4];
+
 				}
 
 			/*task_pd-left leg: these are being ignored currently*/
@@ -109,6 +218,11 @@ double * add_smlnk_params(double* q,int flag)
 			in[37]=q1[7];
 			in[38]=q1[8];
 			in[39]=q1[9];
+			in[40]=q1dot[5];
+			in[41]=q1dot[6];
+			in[42]=q1dot[7];
+			in[43]=q1dot[8];
+			in[44]=q1dot[9];
 			/*motor_pd-left leg: kp gains for walking*/
 			in[45]=400;
 			in[46]=200;
@@ -137,11 +251,18 @@ double * add_smlnk_params(double* q,int flag)
 					in[i]=0;
 				}
 			/*using the configuration obtained from the above fn as kp target*/
-			in[90]=q1[1];
-			in[91]=q1[2];
-			in[92]=q1[3];
-			in[93]=q1[4];
-			in[94]=q1[5];
+			in[90]=q1[0];
+			in[91]=q1[1];
+			in[92]=q1[2];
+			in[93]=q1[3];
+			in[94]=q1[4];
+			in[95]=q1dot[0];
+			in[96]=q1dot[1];
+			in[97]=q1dot[2];
+			in[98]=q1dot[3];
+			in[99]=q1dot[4];
+
+
 			/*motor_pd-right leg: kp gains for walking*/
 			in[100]=400;
 			in[101]=200;

@@ -18,6 +18,7 @@ void delay(int number_of_seconds)
         ; 
 }
 
+/*
 int main(void)
 	{
 		cassie_sim_t *c = cassie_sim_init();
@@ -27,157 +28,98 @@ int main(void)
 	
 		//The input for cassie in every simulation
 		pd_in_t u = {0};
-
+		
 		//Reading the input
-		FILE * file;
-		file = fopen("trajectory.txt","r");
-		//file = fopen("trajectory_1to6.txt","r");
-
+//		FILE * file;
+//		file = fopen("params_bez.txt","r");
+		
 		/* allocating memory for right leg stance halpha*/
 
-		double ** ha_r=malloc(9*sizeof(double *));
-		for(int k=0;k<9;k=k+1)
+/*		double ** alpha_1=malloc(10*sizeof(double *));
+		for(int k=0;k<10;k=k+1)
 			{
-				ha_r[k]=malloc(10*sizeof(double));
+				alpha_1[k]=malloc(6*sizeof(double));
 			}
 
-		for(int i=0;i<9;i=i+1)
+		for(int i=0;i<10;i=i+1)
 			{
-				for(int j=0;j<10;j=j+1)
+				for(int j=0;j<6;j=j+1)
 					{	//storing ....
-						if(!fscanf(file,"%lf",&ha_r[i][j]))
+						if(!fscanf(file,"%lf",&alpha_1[i][j]))
 						break;
-						//printf("%lf\n",ha_r[i][j]);
+						printf("%lf\n",alpha_1[i][j]);
 					}
 			}
 
-		//this is for the matrix below the last read matrix
-		double ** ha_r2=malloc(9*sizeof(double *));
-		for(int k=0;k<9;k=k+1)
+
+		double ** alpha_3=malloc(10*sizeof(double *));
+		for(int k=0;k<10;k=k+1)
 			{
-				ha_r2[k]=malloc(10*sizeof(double));
+				alpha_3[k]=malloc(6*sizeof(double));
 			}
 
-		for(int i=0;i<9;i=i+1)
+		for(int i=0;i<10;i=i+1)
 			{
-				for(int j=0;j<10;j=j+1)
+				for(int j=0;j<6;j=j+1)
 					{	//storing ....
-						if(!fscanf(file,"%lf",&ha_r2[i][j]))
+						if(!fscanf(file,"%lf",&alpha_3[i][j]))
 						break;
-						//printf("%lf\n",ha_r2[i][j]);
+						printf("%lf\n",alpha_3[i][j]);
 					}
-			}
-				
+			}	
+*/
+//		cassie_sim_hold(c);
+//		double *q;
+//		double *qdot;
 
-		//cassie_sim_hold(c);
-		double *q;
-		double *ha;
-		double *input;
-		int flag=1;
-                double * pos;
+		//We are not using ha here as ha and q are the same essentially 
+//		double *ha;
+//		double *input;
+//		int flag=1;
+//              double * pos;
+		
+		//double t= cassie_sim_time(c);
+		//double t_minus;
+
+//		do{
+			/*double t= cassie_sim_time(c);
+			if(t<=0.4)
+				{
+					
+					q=qd(t,alpha_1);
+					qdot=qddot(t,alpha_1);
+					input=add_smlnk_params(q,qdot,flag);
+					memcpy(&u,input,sizeof(u));	
+					cassie_sim_step_pd(c, &y,&u);
+				}
+			else
+				{
+			*/		//u={0};			
+//					cassie_sim_step_pd(c, &y,&u);
+
+			//	}
+//		} while (cassie_vis_draw(v, c));
 
 
-/*
-
- double * state;
- state = cassie_sim_qpos(c);
- for(loop = 0; loop < sizeof(state); loop++)
-      printf("%d ", state[loop]);
 
 
-
-
+//	}
 */
 
-/*
-//Checking the traj
-		for (int j=0;j<10;j=j+1)
-				{	
-					//printf("done \n");
-					double temp[9];
-					for( int k=0;k<9;k=k+1)
-						{
-							temp[k]=ha_r2[k][j];
-						}	
-					ha=temp;
-				 	q=htoq(ha);
-					input=add_smlnk_params(q,flag);
-					memcpy(&u,input,sizeof(u));	
-					cassie_sim_step_pd(c, &y,&u);
-					pos = cassie_sim_qpos(c);
-					for(int loop = 0; loop < sizeof(state); loop++)
-      						printf("%d ", pos[loop]);
-					delay(5); 
-									
-				}
+int main(void)
+{
+    cassie_sim_t *c = cassie_sim_init();
+    cassie_vis_t *v = cassie_vis_init();
 
-		for (int j=0;j<10;j=j+1)
-				{
-			
-					double temp[9];
-					for( int k=0;k<9;k=k+1)
-						{
-							temp[k]=ha_r[k][j];
-						}	
-					ha=temp;
-				 	q=htoq(ha);
-					input=add_smlnk_params(q,0);
-					memcpy(&u,input,sizeof(u));	
-					cassie_sim_step_pd(c, &y,&u);
-					delay(10); 					
-				}
+    state_out_t y;
+    pd_in_t u = {0};
+    cassie_sim_hold(c);
+    do {
+        cassie_sim_step_pd(c, &y, &u);
+    } while (cassie_vis_draw(v, c));
 
-
-		do{
-			pd_in_t z={0};
-			cassie_sim_step_pd(c, &y,&z);
-		} while (cassie_vis_draw(v, c));
-
-
-
-*/
-		
-		do {		
-			//ha_r
-			for (int j=0;j<10;j=j+1)
-				{
-			
-					double temp[9];
-					for( int k=0;k<9;k=k+1)
-						{
-							temp[k]=ha_r[k][j];
-						}	
-					ha=temp;
-				 	q=htoq(ha);
-					input=add_smlnk_params(q,flag);
-					memcpy(&u,input,sizeof(u));	
-					cassie_sim_step_pd(c, &y,&u);
-					//delay(1); 					
-				}
-			
-			//ha_r2
-			for (int j=0;j<10;j=j+1)
-				{
-					printf("done \n");
-					double temp[9];
-					for( int k=0;k<9;k=k+1)
-						{
-							temp[k]=ha_r2[k][j];
-						}	
-					ha=temp;
-				 	q=htoq(ha);
-					input=add_smlnk_params(q,flag);
-					memcpy(&u,input,sizeof(u));	
-					cassie_sim_step_pd(c, &y,&u);
-					//delay(1); 					
-				}
-			//pd_in_t z={0};
-			//cassie_sim_step_pd(c, &y,&z);
-		} while (cassie_vis_draw(v, c));
-		
-
-	}
-	
+    return 0;
+}
 
 
 
