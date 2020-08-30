@@ -55,9 +55,9 @@ We use mex compiler for compiling the cassietest.c file and linking along with t
 
 Step 0: Add the BRL-test-folder/MATLAB_CODE to MATLAB PATH.
 
-step 1: make test
+step 1: `make test`
 
-Step 2: run the mat_to_c executable file in the test folder (we can set the name of the exec in the make file : look at MATLAB documentation of mex compiler for           more ).
+Step 2: run the `mat_to_c`executable file in the `test` folder (we can set the name of the exec in the make file : look at MATLAB documentation of mex compiler for           more ).
 
 ***How to add path to MATLAB ROOT:***
 
