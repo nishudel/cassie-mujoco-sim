@@ -69,4 +69,6 @@ What if it does allow you to save?
 
 The one that you add in the path on the earlier step might be just for the current session of MATLAB and when you restart it, then you might have to set the path again. 
 
-We need  to permanently add the path that we need to MATLAB, this can be done by following the [instructions here](https://www.mathworks.com/matlabcentral/answers/102037-how-can-i-move-the-pathdef-m-file-from-its-default-location-to-another-location-in-matlab-8-1-r20).
+We need  to permanently add the path that we need to MATLAB, this can be done by following the [instructions here](https://www.mathworks.com/matlabcentral/answers/102037-how-can-i-move-the-pathdef-m-file-from-its-default-location-to-another-location-in-matlab-8-1-r20). 
+
+I added `startup.m` to my `userpath` of MATLAB and this file is in the BRL-test-folder/MATLAB_CODE in the name of start1.m for reference.  
