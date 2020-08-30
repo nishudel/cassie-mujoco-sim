@@ -40,17 +40,18 @@ To run the program just run the run_cassietest.sh script or follow the steps in 
 
 ## How to run MATLAB and C together(calling MATLAB functiond from C here): 
 
-###Code:
+***Code:***
 
 We use MATLAB engine API for C to do the task.
-
 The header files required are mentioned in the mat_to_c.c file 
 
-Include mat_to_c.h file in cassietest.c
+Include mat_to_c.h file in cassietest.c( this has already been added to the code and is just an informative point).
 
 We use mex compiler for compiling the cassietest.c file and linking along with the libraries of MATLAB (see makefile of example folder).
 
-###How to run:
+ 
+
+***How to run:***
 
 Step 0: Add the BRL-test-folder/MATLAB_CODE to MATLAB PATH.
 
@@ -58,7 +59,7 @@ step 1: make test
 
 Step 2: run the mat_to_c executable file in the test folder (we can set the name of the exec in the make file : look at MATLAB documentation of mex compiler for           more ).
 
-###How to add path to MATLAB ROOT:
+***How to add path to MATLAB ROOT:***
 
 step 1: Click on setPath>Add Folder> (click on th required folder here MATLAB_Code)
 
