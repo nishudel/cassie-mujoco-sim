@@ -38,5 +38,5 @@ Any changes to the cassietest.c progeam needs to be done in the example folder( 
       
 To run the program just run the run_cassietest.sh script or follow the steps in it.
 
-
+# How to run MATLAB and C together(calling MATLAB functiond from C here): 
 
