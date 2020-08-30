@@ -31,7 +31,9 @@ clean:
 	rm -f $(CTRLOUT)
 
 $(TESTOUT): cassietest.c
-	$(CC) cassietest.c $(INC) $(CFLAGS) $(LDFLAGS) $(LIBS) -o $(TESTOUT)
+	$(CC) -c cassietest.c $(INC) $(CFLAGS) 
+	mex -client engine cassietest.o mat_to_c.c -L. $(LIBS) 
+	#-o $(TESTOUT)
 
 $(SIMOUT): cassiesim.c
 	$(CC) cassiesim.c $(INC) $(CFLAGS) $(LDFLAGS) $(LIBS) -o $(SIMOUT)

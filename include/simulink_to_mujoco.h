@@ -26,6 +26,6 @@ double* qddot(double T, double params[10][6]);
   parameters to generate an input readable by MuJoCo
   flag=1 implies right leg stance flag=0 implies
   left leg stance */
-double * add_smlnk_params(double* q,double* qd,int flag);
-//double * add_smlnk_params(double* q,int flag);
+//double * add_smlnk_params(double* q,double* qd,int flag);
+double * add_smlnk_params(double* input);
 
