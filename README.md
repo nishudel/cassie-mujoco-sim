@@ -38,5 +38,37 @@ Any changes to the cassietest.c progeam needs to be done in the example folder( 
       
 To run the program just run the run_cassietest.sh script or follow the steps in it.
 
+## How to run MATLAB and C together(calling MATLAB functiond from C here): 
 
+***Code:***
 
+We use MATLAB engine API for C to do the task.
+The header files required are mentioned in the mat_to_c.c file 
+
+Include mat_to_c.h file in cassietest.c( this has already been added to the code and is just an informative point).
+
+We use mex compiler for compiling the cassietest.c file and linking along with the libraries of MATLAB (see makefile of example folder).
+
+ 
+
+***How to run:***
+
+Step 0: Add the BRL-test-folder/MATLAB_CODE to MATLAB PATH.
+
+step 1: `make test`
+
+Step 2: run the `mat_to_c`executable file in the `test` folder (we can set the name of the exec in the make file : look at MATLAB documentation of mex compiler for           more ).
+
+***How to add path to MATLAB ROOT:***
+
+step 1: Click on setPath>Add Folder> (click on th required folder here MATLAB_Code)
+
+Step 2: Click on save
+
+What if it does allow you to save?
+
+The one that you add in the path on the earlier step might be just for the current session of MATLAB and when you restart it, then you might have to set the path again. 
+
+We need  to permanently add the path that we need to MATLAB, this can be done by following the [instructions here](https://www.mathworks.com/matlabcentral/answers/102037-how-can-i-move-the-pathdef-m-file-from-its-default-location-to-another-location-in-matlab-8-1-r20). 
+
+I added `startup.m` to my `userpath` of MATLAB and this file is in the BRL-test-folder/MATLAB_CODE in the name of start1.m for reference.  
