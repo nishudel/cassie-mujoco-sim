@@ -73,6 +73,6 @@ We need  to permanently add the path that we need to MATLAB, this can be done by
 
 I added `startup.m` to my `userpath` of MATLAB and this file is in the BRL-test-folder/MATLAB_CODE in the name of start1.m for reference. 
 
-And this contains the location for the`pathdef.m` file ( also there in the MATLAB_CODE) folder, which contains the paths to be loaded for MATLAB when a new session is started.
+And this contains the location for the`pathdef.m` file ( also there in the MATLAB_CODE for reference) folder, which contains the paths to be loaded for MATLAB when a new session is started.
 
 `Pathdef.m` can be originally found in ~/MATLAB/R2020a/toolbox/local.
