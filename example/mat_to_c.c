@@ -1,3 +1,6 @@
+//Look at engdemo.c as an example to know more about the engine API
+
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -8,7 +11,6 @@
 #include "../include/cassiemujoco.h"
 #include "../include/simulink_to_mujoco.h"
 #define  BUFSIZE 256
-
 
 
 void input( void)
@@ -29,18 +31,23 @@ void input( void)
 
 	state_out_t y;
 	pd_in_t u = {0};
-	double t[801]={0};
-	for( int i=0;i<801;i++)
+/*	The time for each stride is 0.4 units and the MuJoCo simulation proceeds in 0.0005 units, 
+	so I have divided 0.4 into 800 time_steps of 0.0005 units and this is sent as the input to
+	MATLAB function along with the flag (stance change) to calculate input for MuJoCo
+*/	double t[801]={0};
+	t[800]=1;
+	for(int i=0;i<800;i++)
 	{
 		t[i+1]=t[i]+0.00125;
 	}
 	
 	double* temp=NULL;
 	double* check_T=NULL;
+//	usually flag is a bool but I need to send this along with data that is of type double
 	double flag=0;
 	cassie_sim_hold(c);
 
-// do{
+ do{
 	flag=0;
 	for(int i=0;i<801;i++)
 	{
@@ -51,6 +58,7 @@ void input( void)
 		memcpy((void *)(ptr0), (void *)T_c, sizeof(T_c));
 		engPutVariable(ep, "T", T);
 		engEvalString(ep,"input=zeros(20,1);");
+//		cassie_input is the MATLAB function that computes the input based on the phase 
 		engEvalString(ep,"input=cassie_input(T);");
 		M_input = engGetVariable(ep,"input");
 		double *input=(double*)(mxGetData(M_input));
@@ -96,7 +104,7 @@ void input( void)
 			input++;
 			count++;
 		}
-*/		printf("%d\n",count);
+*///		printf("%d\n",count);
 		temp=add_smlnk_params(input);
 		memcpy(&u,temp,sizeof(u));
 		cassie_sim_step_pd(c, &y, &u);
@@ -106,7 +114,7 @@ void input( void)
 	
 	}
 	
- //}while(cassie_vis_draw(v, c));
+ }while(cassie_vis_draw(v, c));
 	pd_in_t u1 = {0};
 
  	do {
