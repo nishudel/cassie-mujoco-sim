@@ -65,7 +65,7 @@ step 1: Click on setPath>Add Folder> (click on th required folder here MATLAB_Co
 
 Step 2: Click on save
 
-What if it does allow you to save?
+What if it does not allow you to save?
 
 The one that you add in the path on the earlier step might be just for the current session of MATLAB and when you restart it, then you might have to set the path again. 
 
