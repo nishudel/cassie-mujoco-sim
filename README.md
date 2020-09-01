@@ -76,3 +76,5 @@ I added `startup.m` to my `userpath` of MATLAB and this file is in the BRL-test-
 And this contains the location for the`pathdef.m` file ( also there in the MATLAB_CODE for reference) folder, which contains the paths to be loaded for MATLAB when a new session is started.
 
 `Pathdef.m` can be originally found in ~/MATLAB/R2020a/toolbox/local.
+
+*Make sure that you have
