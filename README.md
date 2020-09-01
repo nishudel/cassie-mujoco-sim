@@ -53,11 +53,14 @@ We use mex compiler for compiling the cassietest.c file and linking along with t
 
 ***How to run:***
 
-Step 0: Add the BRL-test-folder/MATLAB_CODE to MATLAB PATH.
+Step 1: Add the BRL-test-folder/MATLAB_CODE to MATLAB PATH.
 
-step 1: `make test`
+Step 2: Add the library path to .bashrc by typing `export LD_LIBRARY_PATH=/usr/local/MATLAB/R2020a/bin/glnxa64:/usr/local/MATLAB/R2020a/sys/os/glnxa64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}`
 
-Step 2: run the `mat_to_c`executable file in the `test` folder (we can set the name of the exec in the make file : look at MATLAB documentation of mex compiler for           more ).
+
+step 3: Go to cassie-mujoco-sim directory and in terminal `make test`
+
+Step 4: run the `mat_to_c`executable file in the `test` folder (we can set the name of the exec in the make file : look at MATLAB documentation of mex compiler for           more ).
 
 ***How to add path to MATLAB ROOT:***
 
