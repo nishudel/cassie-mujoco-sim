@@ -55,7 +55,9 @@ We use mex compiler for compiling the cassietest.c file and linking along with t
 
 Step 1: Add the BRL-test-folder/MATLAB_CODE to MATLAB PATH.
 
-Step 2: Add the library path to .bashrc by typing `export LD_LIBRARY_PATH=/usr/local/MATLAB/R2020a/bin/glnxa64:/usr/local/MATLAB/R2020a/sys/os/glnxa64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}`
+Step 2: Add the library path to .bashrc by typing
+
+`export LD_LIBRARY_PATH=/usr/local/MATLAB/R2020a/bin/glnxa64:/usr/local/MATLAB/R2020a/sys/os/glnxa64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}`
 
 
 step 3: Go to cassie-mujoco-sim directory and in terminal `make test`
